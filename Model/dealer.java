@@ -1,5 +1,6 @@
 package Model;
+import java.util.ArrayList;
 
 public class dealer {
-	protected String mao;
+	protected ArrayList<carta> mao = new ArrayList<carta>();
 }
