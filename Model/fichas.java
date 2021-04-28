@@ -13,11 +13,37 @@ public class fichas {
 		valores.add(1); valores.add(1);
 	}
 	
-	public int getSaldo() {
+	public int getSomatorio() {
 		int tam = valores.size();
-		int saldo=0;
+		int somatorio=0;
 		for(int i=0; i<tam; i++)
-			saldo = saldo + valores.get(i);
-		return saldo;
+			somatorio = somatorio + valores.get(i);
+		return somatorio;
+	}
+	
+	protected int numFichas() {
+		return this.valores.size();
+	}
+	
+	public int getPrimeiraFicha() {
+		int prim = this.valores.get(0);
+		this.valores.remove(0);
+		return prim;
+	}
+	
+	public void adicionaConjunto(fichas conj) {
+		int tam = conj.numFichas();
+		for(int i=0; i<tam; i++) {
+			int valor = conj.getPrimeiraFicha();
+			adicionaFicha(valor);
+		}
+	}
+	
+	public void removeFicha(int tira) {
+		int pos = this.valores.indexOf(tira);
+		this.valores.remove(pos);
+	}
+	public void adicionaFicha(int adic) {
+		this.valores.add(adic);
 	}
 }
