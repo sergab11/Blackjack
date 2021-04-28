@@ -26,9 +26,7 @@ public class fichas {
 	}
 	
 	public int getPrimeiraFicha() {
-		int prim = this.valores.get(0);
-		this.valores.remove(0);
-		return prim;
+		return this.valores.remove(0);
 	}
 	
 	public void adicionaConjunto(fichas conj) {
