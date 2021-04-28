@@ -10,4 +10,15 @@ public class jogador {
 		nome = dnome;
 		conj = new fichas();
 	}
+	public int getSaldo() {
+		int saldo = conj.getSomatorio();
+		return saldo;
+	}
+	
+	public fichas getfichas() {
+		return this.conj;
+	}
+	public void ganhouRodada(fichas rodada) {
+		conj.adicionaConjunto(rodada);
+	}
 }
