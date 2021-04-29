@@ -25,11 +25,11 @@ public class fichas {
 		return this.valores.size();
 	}
 	
-	public int getPrimeiraFicha() {
+	protected int getPrimeiraFicha() {
 		return this.valores.remove(0);
 	}
 	
-	public void adicionaConjunto(fichas conj) {
+	protected void adicionaConjunto(fichas conj) {
 		int tam = conj.numFichas();
 		for(int i=0; i<tam; i++) {
 			int valor = conj.getPrimeiraFicha();
@@ -37,11 +37,26 @@ public class fichas {
 		}
 	}
 	
-	public void removeFicha(int tira) {
+	protected int getValorFicha(int n) {
+		int val = valores.get(n);
+		return val;
+	}
+	
+	protected int getIndiceFicha(int n) {
+		int pos = valores.indexOf(n);
+		return pos;
+	}
+	
+	protected void removeFicha(int tira) {
 		int pos = this.valores.indexOf(tira);
 		this.valores.remove(pos);
 	}
-	public void adicionaFicha(int adic) {
+	
+	protected void adicionaFicha(int adic) {
 		this.valores.add(adic);
+	}
+	
+	protected void limpa() {
+		valores.clear();
 	}
 }
