@@ -42,8 +42,4 @@ public class baralho {
     public carta getPrimeiraCarta() {
         return completo.remove(0);
     }
-
-    public carta getUltimaCarta() {
-    	return completo.get(completo.size()-1);
-    }
 }
