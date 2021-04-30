@@ -1,18 +1,20 @@
-package model;
+package Model;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
-public class Jogador {
+class Jogador {
 	protected String nome;
-	protected ArrayList<Carta> mao = new ArrayList<Carta>();
-	protected Fichas conj;
-	protected Fichas aposta;
+	protected ArrayList<carta> mao = new ArrayList<carta>();
+	protected fichas conj;
+	protected fichas aposta;
 	
-	public Jogador(String dnome) {
+	Jogador(String dnome) {
 		nome = dnome;
-		conj = new Fichas();
+		conj = new fichas();
 	}
 	
-	public void dobra(Carta tira) {
+	public void dobra(carta tira) {
 		int tam = aposta.numFichas();
 		for(int i=0; i<tam; i++) {
 			int valor = aposta.getValorFicha(i);
@@ -22,7 +24,7 @@ public class Jogador {
 		boolean q = this.verificaMao();
 	}
 	
-	public void hit(Carta tira) {
+	public void hit(carta tira) {
 		this.adicionaCartaMao(tira);
 		boolean q = this.verificaMao();
 	}
@@ -32,15 +34,15 @@ public class Jogador {
 		return saldo;
 	}
 	
-	public Fichas getAposta() {
+	public fichas getAposta() {
 		return this.aposta;
 	}
 	
-	public void ganhouRodada(Fichas rodada) {
+	public void ganhouRodada(fichas rodada) {
 		this.conj.adicionaConjunto(rodada);
 	}
 	
-	protected void adicionaCartaMao(Carta recebe) {
+	protected void adicionaCartaMao(carta recebe) {
 		mao.add(recebe);
 	}
 	
@@ -65,6 +67,41 @@ public class Jogador {
 	protected int somaMao() {
 		int tam = mao.size();
 		int soma1 = 0, soma2 = 0;
+		
+		ArrayList<Integer> somas = new ArrayList<Integer>();
+		somas.add(0);
+		
+		for(int i = 0; i < mao.size(); i++) {
+			if (mao.get(i).getNumero() == "A") {
+				int aux_tamanho = somas.size();
+				for(int j = 0; j < aux_tamanho; j++) {
+					somas[j] += 1;
+					somas.add(somas[j] + 11);
+				}
+			}
+			else if (mao.get(i).getNumero() == "J" || mao.get(i).getNumero() == "Q" || mao.get(i).getNumero() == "K") {
+				for(int j = 0; j < somas.size(); j++) {
+					somas[j] += 10;
+				}
+			}
+			else {
+				for(int j = 0; j < somas.size(); j++) {
+					somas[j] += Integer.valueOf(mao.get(i).getNumero());
+				}
+			}
+		}
+		
+		Arrays.sort(somas, Collections.reverseOrder());
+		
+		for (int i = 0; i < somas.size(); i++) {
+			if (somas[i] <= 21) {
+				return somas[i];
+			}
+		}
+		
+		return somas[0];
+		
+		/*	Só funciona para um AS		
 		for(int i=0; i<tam; i++) {
 			if (mao.get(i).getNumero() == "A") {
 				soma1 += 11;
@@ -83,6 +120,7 @@ public class Jogador {
 			return soma2;
 		else
 			return soma1;
+		*/
 	}
 	
 	protected void limpaAposta() {

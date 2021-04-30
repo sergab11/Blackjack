@@ -1,7 +1,7 @@
-package model;
+package Model;
 import java.util.ArrayList;
 
-public class Fichas {
+class Fichas {
 	protected ArrayList<Integer> valores;
 	
 	public Fichas() {
@@ -29,7 +29,7 @@ public class Fichas {
 		return this.valores.remove(0);
 	}
 	
-	protected void adicionaConjunto(Fichas conj) {
+	protected void adicionaConjunto(fichas conj) {
 		int tam = conj.numFichas();
 		for(int i=0; i<tam; i++) {
 			int valor = conj.getPrimeiraFicha();

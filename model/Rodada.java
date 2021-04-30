@@ -1,47 +1,27 @@
-package model;
+package Model;
 import java.util.ArrayList;
 
-public class Rodada {
-	protected Fichas Apostas;
-	protected ArrayList<Jogador> jogadores = new ArrayList<Jogador>();
-	protected ArrayList<Baralho> baralhos = new ArrayList<Baralho>();
-	protected Dealer dealer;
+class Rodada {
+	protected fichas Apostas;
+	protected ArrayList<jogador> jogadores = new ArrayList<jogador>();
+	protected ArrayList<baralho> baralhos = new ArrayList<baralho>();
+	protected dealer Dealer;
 	static int jogadorVez = 0;
 	static int numj;
 	
-	public Rodada(String jog) {
-		Jogador j0 = new Jogador(jog); 
-		jogadores.add(j0);
-		numj = 1;
+	Rodada(ArrayList<String> nomesJogadores) throws Exception {
+		
+		numj = jogadores.size();
+		if (numj > 4) {
+			throw new Exception("O limite de 4 jogadores foi excedido.") 
+		}
+		
+		for (int i = 0; i < nomesJogadores.size(); i++) {
+			jogador aux = new Jogador(nomesJogadores[i]);
+			jogadores.add(aux);
+		}
 	}
-	public Rodada(String jog1, String jog2) {
-		Jogador j1 = new Jogador(jog1);
-		Jogador j2 = new Jogador(jog2);
-		jogadores.add(j1);
-		jogadores.add(j2);
-		numj = 2;
-	}
-	public Rodada(String jog1, String jog2, String jog3) {
-		Jogador j1 = new Jogador(jog1);
-		Jogador j2 = new Jogador(jog2);
-		Jogador j3 = new Jogador(jog3);
-		jogadores.add(j1);
-		jogadores.add(j2);
-		jogadores.add(j3);
-		numj = 3;
-	}
-	public Rodada(String jog1, String jog2, String jog3, String jog4) {
-		Jogador j1 = new Jogador(jog1);
-		Jogador j2 = new Jogador(jog2);
-		Jogador j3 = new Jogador(jog3);
-		Jogador j4 = new Jogador(jog4);
-		jogadores.add(j1);
-		jogadores.add(j2);
-		jogadores.add(j3);
-		jogadores.add(j4);
-		numj = 4;
-	}
-	
+
 	protected static void proximo() {
 		jogadorVez++;
 		if(jogadorVez == numj)
@@ -49,17 +29,17 @@ public class Rodada {
 	}
 	
 	protected void adicionaAposta() {
-		Fichas montante = jogadores.get(jogadorVez).getAposta();
+		fichas montante = jogadores.get(jogadorVez).getAposta();
 		Apostas.adicionaConjunto(montante);
 	}
 	
 	public void dobra() {
-		Carta recebe = baralhos.get(0).getPrimeiraCarta();
+		carta recebe = baralhos.get(0).getPrimeiraCarta();
 		jogadores.get(jogadorVez).dobra(recebe);
 	}
 	
 	public void hit() {
-		Carta recebe = baralhos.get(0).getPrimeiraCarta();
+		carta recebe = baralhos.get(0).getPrimeiraCarta();
 		jogadores.get(jogadorVez).hit(recebe);
 	}
 	

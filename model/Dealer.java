@@ -1,7 +1,6 @@
-package model;
+package Model;
 import java.util.ArrayList;
 
-public class Dealer {
-	protected ArrayList<Carta> mao = new ArrayList<Carta>();
-	
+class Dealer {
+	protected ArrayList<carta> mao = new ArrayList<carta>();
 }

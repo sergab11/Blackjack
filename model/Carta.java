@@ -1,10 +1,10 @@
-package model;
+package Model;
 
-public class Carta {
+Class Carta {
 	private String naipe;
 	private String numero;
 
-	public Carta(String np, String num) {
+	Carta(String np, String num) {
 		naipe = np.toUpperCase();
 	    numero = num;
 	}
