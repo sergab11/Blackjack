@@ -1,20 +1,19 @@
-package Model;
+package model;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 class Jogador {
 	protected String nome;
-	protected ArrayList<carta> mao = new ArrayList<carta>();
-	protected fichas conj;
-	protected fichas aposta;
+	protected ArrayList<Carta> mao = new ArrayList<Carta>();
+	protected Fichas conj;
+	protected Fichas aposta;
 	
 	Jogador(String dnome) {
 		nome = dnome;
-		conj = new fichas();
+		conj = new Fichas();
 	}
 	
-	public void dobra(carta tira) {
+	public void dobra(Carta tira) {
 		int tam = aposta.numFichas();
 		for(int i=0; i<tam; i++) {
 			int valor = aposta.getValorFicha(i);
@@ -24,7 +23,7 @@ class Jogador {
 		boolean q = this.verificaMao();
 	}
 	
-	public void hit(carta tira) {
+	public void hit(Carta tira) {
 		this.adicionaCartaMao(tira);
 		boolean q = this.verificaMao();
 	}
@@ -34,15 +33,15 @@ class Jogador {
 		return saldo;
 	}
 	
-	public fichas getAposta() {
+	public Fichas getAposta() {
 		return this.aposta;
 	}
 	
-	public void ganhouRodada(fichas rodada) {
+	public void ganhouRodada(Fichas rodada) {
 		this.conj.adicionaConjunto(rodada);
 	}
 	
-	protected void adicionaCartaMao(carta recebe) {
+	protected void adicionaCartaMao(Carta recebe) {
 		mao.add(recebe);
 	}
 	
@@ -65,8 +64,7 @@ class Jogador {
 	}
 	
 	protected int somaMao() {
-		int tam = mao.size();
-		int soma1 = 0, soma2 = 0;
+		int aux = 0;
 		
 		ArrayList<Integer> somas = new ArrayList<Integer>();
 		somas.add(0);
@@ -75,52 +73,33 @@ class Jogador {
 			if (mao.get(i).getNumero() == "A") {
 				int aux_tamanho = somas.size();
 				for(int j = 0; j < aux_tamanho; j++) {
-					somas[j] += 1;
-					somas.add(somas[j] + 11);
+					aux = somas.get(j)+1;
+					somas.add(aux + 11);
 				}
 			}
 			else if (mao.get(i).getNumero() == "J" || mao.get(i).getNumero() == "Q" || mao.get(i).getNumero() == "K") {
 				for(int j = 0; j < somas.size(); j++) {
-					somas[j] += 10;
+					aux = somas.get(j)+10;
+					somas.set(j, aux);
 				}
 			}
 			else {
 				for(int j = 0; j < somas.size(); j++) {
-					somas[j] += Integer.valueOf(mao.get(i).getNumero());
+					aux = somas.get(j) + Integer.valueOf(mao.get(i).getNumero());
+					somas.set(j, aux);
 				}
 			}
 		}
 		
-		Arrays.sort(somas, Collections.reverseOrder());
+		Collections.sort(somas, Collections.reverseOrder());
 		
 		for (int i = 0; i < somas.size(); i++) {
-			if (somas[i] <= 21) {
-				return somas[i];
+			if (somas.get(i) <= 21) {
+				return somas.get(i);
 			}
 		}
 		
-		return somas[0];
-		
-		/*	Só funciona para um AS		
-		for(int i=0; i<tam; i++) {
-			if (mao.get(i).getNumero() == "A") {
-				soma1 += 11;
-				soma2 += 1;
-			}
-			if(mao.get(i).getNumero() == "J" || mao.get(i).getNumero() == "Q" || mao.get(i).getNumero() == "K") {
-				soma1 += 10;
-				soma2 += 10;
-			}
-			else { 
-				soma1 += Integer.valueOf(mao.get(i).getNumero());
-				soma2 += Integer.valueOf(mao.get(i).getNumero());
-			}
-		}
-		if(soma1 > 21) 
-			return soma2;
-		else
-			return soma1;
-		*/
+		return somas.get(0);
 	}
 	
 	protected void limpaAposta() {
